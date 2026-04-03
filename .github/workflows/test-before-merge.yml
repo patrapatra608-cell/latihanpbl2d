@@ -7,18 +7,22 @@ on:
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install HTMLHint & Stylelint
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
         run: |
-          npm install -g htmlhint stylelint stylelint-config-standard
+          npm init -y
+          npm install stylelint stylelint-config-standard htmlhint
 
-      - name: Periksa HTML
-        run: htmlhint "**/*.html"
+      - name: Cek HTML
+        run: npx htmlhint "**/*.html"
 
-      - name: Periksa CSS
-        run: stylelint "**/*.css"
+      - name: Cek CSS
+        run: npx stylelint "**/*.css"
